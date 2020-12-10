@@ -2,6 +2,7 @@
 // See documentation : https://github.com/nunit/docs/wiki/NUnit-Documentation
 using System.Collections;
 using System.Collections.Generic;
+using MovieRental.PriceCalcStrategy;
 using NUnit.Framework;
 
 namespace MovieRental
@@ -12,31 +13,27 @@ namespace MovieRental
         [Test]
         public void NameFilmShouldBeCorrect()
         {
-	        Movie movie = new Movie("Rio2", Movie.Type.NEW_RELEASE);
+	        Movie movie = new Movie("Rio2");
             Assert.AreEqual("Rio2", movie.getTitle());
         }
-        [Test]
-        public void TypeFilmShouldBeCorrect()
-        {
 
-            Movie movie = new Movie("Rio2", Movie.Type.NEW_RELEASE);
-            Assert.AreEqual(Movie.Type.NEW_RELEASE, movie.getPriceCode());
-        }
         [Test]
         public void RentalShouldBeCorrectMovie()
         {
-            Movie movie = new Movie("Angry Birds", Movie.Type.REGULAR);
-            Rental rental = new Rental(movie, 20);
-            Assert.AreEqual(movie, rental.getMovie());
+            Movie movie = new Movie("Angry Birds");
+            var rental = new ChildRental(movie, 20);
+            Assert.AreEqual(movie, rental.Movie);
         }
+
         [Test]
         public void RentalShouldBeCorrectDayRented()
         {
 
-            Movie movie = new Movie("Angry Birds", Movie.Type.REGULAR);
-            Rental rental = new Rental(movie, 20);
-            Assert.AreEqual(20, rental.getDaysRented());
+            Movie movie = new Movie("Angry Birds");
+            var rental = new ChildRental(movie, 20);
+            Assert.AreEqual(20, rental.Days);
         }
+
         [Test]
         public void CustomerShouldBeCorrectName()
         {
@@ -45,24 +42,23 @@ namespace MovieRental
         }
         [Test]
         public void CustomerCreateCorrectStatement()
-{
+        {
+            Customer customer = new Customer("Bug");
 
-    Customer customer = new Customer("Bug");
+            Movie movie1 = new Movie("Angry Birds");
+            var rental1 = new ChildRental(movie1, 2);
+            customer.addRental(rental1);
 
-        Movie movie1 = new Movie("Angry Birds", Movie.Type.CHILDREN);
-        Rental rental1 = new Rental(movie1, 2);
-        customer.addRental(rental1);
+	        Movie movie2 = new Movie("StarWar");
+            var rental2 = new NewReleaseRental(movie2, 10);
+            customer.addRental(rental2);
 
-	Movie movie2 = new Movie("StarWar", Movie.Type.NEW_RELEASE);
-        Rental rental2 = new Rental(movie2, 10);
-        customer.addRental(rental2);
+	        Movie movie3 = new Movie("Hatico");
+            var rental3 = new RegularRental(movie3, 4);
+            customer.addRental(rental3);
 
-	Movie movie3 = new Movie("Hatico", Movie.Type.REGULAR);
-        Rental rental3 = new Rental(movie3, 4);
-        customer.addRental(rental3);
-
-        string actual = customer.statement();
-        Assert.AreEqual("учет аренды для Bug\n\tAngry Birds\t15\n\tStarWar\t30\n\tHatico\t32\nСумма задолженности составляет 77\nВы заработали 4 очков за активность", actual);
+            string actual = customer.statement();
+            Assert.AreEqual("учет аренды для Bug\n\tAngry Birds\t15\n\tStarWar\t30\n\tHatico\t32\nСумма задолженности составляет 77\nВы заработали 4 очков за активность", actual);
+        }
     }
-}
 }

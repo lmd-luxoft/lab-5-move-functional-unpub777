@@ -42,7 +42,11 @@
   <ItemGroup>
     <Compile Include="Customer.cs" />
     <Compile Include="Movie.cs" />
-    <Compile Include="Rental.cs" />
+    <Compile Include="Rentals\ChildRental.cs" />
+    <Compile Include="Rentals\IRental.cs" />
+    <Compile Include="Rentals\NewReleaseRental.cs" />
+    <Compile Include="Rentals\Rental.cs" />
+    <Compile Include="Rentals\RegularRental.cs" />
     <Compile Include="TestClass.cs" />
   </ItemGroup>
   <ItemGroup>
