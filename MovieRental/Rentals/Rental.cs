@@ -1,4 +1,4 @@
-﻿namespace MovieRental.PriceCalcStrategy
+﻿namespace MovieRental.Rentals
 {
     public abstract class Rental : IRental
     {

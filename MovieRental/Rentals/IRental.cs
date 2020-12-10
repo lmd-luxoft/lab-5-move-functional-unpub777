@@ -1,4 +1,4 @@
-﻿namespace MovieRental
+﻿namespace MovieRental.Rentals
 {
     public interface IRental
     {
